@@ -1,0 +1,23 @@
+=== FD001 Data Loader ===
+
+Loading CSV files...
+
+Data summary:
+  X_train_norm: 20631 x 15  (normalized sensors)
+  X_train_pca:  20631 x 2  (PCA scores)
+  y_train:      20631 x 1   (RUL_capped, range 0-125)
+  X_test_norm:  13096 x 15  (normalized sensors)
+  X_test_pca:   13096 x 2  (PCA scores)
+  y_test_true:  100 x 1   (true RUL, range 7-145)
+  Engines train: 100 unique
+  Engines test:  100 unique
+
+PCA variance:
+  PC1: 52.4%  (cumulative: 52.4%)
+  PC2: 30.5%  (cumulative: 82.9%)
+  PC3: 2.0%  (cumulative: 84.9%)
+  PC4: 1.8%  (cumulative: 86.8%)
+  PC5: 1.7%  (cumulative: 88.5%)
+
+Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\fd001_data.mat
+Run fd001_train_ann.m next.

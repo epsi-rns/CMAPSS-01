@@ -1,0 +1,55 @@
+=== FD001 Plots ===
+
+Figure 1: Degradation trajectories...
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_A1_degradation.png
+Figure 2: PCA scree plot...
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_A3_scree.png
+Figure 3: PCA scatter...
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_A4_pca_scatter.png
+Figure 4: Loss curve...
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_B5_loss_curve.png
+Figure 5: True vs Predicted...
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_B6_true_vs_pred.png
+Figure 6: Error distribution...
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_B7_error_dist.png
+Figure 7: Garson NORM...
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_C8_garson_norm.png
+Figure 8: Garson PCA...
+Warning: Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax:
+Engine speed\nsensors
+ 
+Warning: Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax:
+Pressure/temp\ncontrast
+ 
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_C10_garson_pca.png
+Figure 9: NASA Score curve...
+Warning: Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax:
+EARLY\nConservative
+ 
+Warning: Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax:
+LATE\nDangerous
+ 
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_D11_nasa_score.png
+Figure 10: RUL cap...
+  Saved: D:\Tugas-Sem2\Data Analitik\05-May\20-CMAPSS\matlab\matlab_D12_rul_cap.png
+
+All figures saved:
+   1. matlab_A1_degradation.png
+   2. matlab_A3_scree.png
+   3. matlab_A4_pca_scatter.png
+   4. matlab_B5_loss_curve.png
+   5. matlab_B6_true_vs_pred.png
+   6. matlab_B7_error_dist.png
+   7. matlab_C8_garson_norm.png
+   8. matlab_C10_garson_pca.png
+   9. matlab_D11_nasa_score.png
+  10. matlab_D12_rul_cap.png
+>> 
