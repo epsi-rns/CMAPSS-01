@@ -1,0 +1,78 @@
+=======================================================
+FD001 (1 condition — no clustering needed)
+=======================================================
+All rows assigned condition_id = 1
+
+=======================================================
+FD002 (6 conditions — KMeans clustering)
+=======================================================
+
+Cluster centroids (the 6 operating conditions):
+ Cond   op_setting_1   op_setting_2   op_setting_3
+----------------------------------------------------
+    1        42.0030         0.8405       100.0000
+    2        20.0030         0.7005       100.0000
+    3        25.0030         0.6205        60.0000
+    4         0.0015         0.0005       100.0000
+    5        10.0030         0.2505       100.0000
+    6        35.0030         0.8405       100.0000
+
+Inertia (sum of squared distances): 0.41
+
+Condition distribution — train:
+condition_id
+1    13458
+2     8122
+3     8002
+4     8044
+5     8096
+6     8037
+
+Condition distribution — test:
+condition_id
+1    8483
+2    5063
+3    5042
+4    5148
+5    5107
+6    5148
+
+Unique conditions per engine (train):
+count    260.0
+mean       6.0
+std        0.0
+min        6.0
+25%        6.0
+50%        6.0
+75%        6.0
+max        6.0
+
+First 5 rows of train_FD002 (op_settings + condition_id):
+ unit_number  time_cycles  op_setting_1  op_setting_2  op_setting_3  condition_id
+           1            1       34.9983        0.8400         100.0             6
+           1            2       41.9982        0.8408         100.0             1
+           1            3       24.9988        0.6218          60.0             3
+           1            4       42.0077        0.8416         100.0             1
+           1            5       25.0005        0.6203          60.0             3
+
+=======================================================
+FD004 (6 conditions — KMeans clustering)
+=======================================================
+
+Cluster centroids (the 6 operating conditions):
+ Cond   op_setting_1   op_setting_2   op_setting_3
+----------------------------------------------------
+    1        42.0030         0.8405       100.0000
+    2        10.0030         0.2505       100.0000
+    3        25.0031         0.6205        60.0000
+    4        20.0030         0.7005       100.0000
+    5         0.0015         0.0005       100.0000
+    6        35.0030         0.8405       100.0000
+
+Inertia (sum of squared distances): 0.47
+
+Done. The fitted km object contains:
+  km.cluster_centers_  — centroid coordinates (6 x 3 array)
+  km.labels_           — condition_id for each train row (0-indexed)
+  km.inertia_          — total within-cluster sum of squares
+  km.n_iter_           — iterations until convergence

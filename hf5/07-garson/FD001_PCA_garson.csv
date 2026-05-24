@@ -1,0 +1,3 @@
+model,sub_dataset,input_type,feature,importance,importance_pct,rank
+FD001_PCA,FD001,PCA,PC1,0.51687,51.687,1
+FD001_PCA,FD001,PCA,PC2,0.48313,48.313,2

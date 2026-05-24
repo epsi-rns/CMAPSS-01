@@ -1,0 +1,64 @@
+<svg width="680" height="460" viewBox="0 0 680 460" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Noise layer stack in C-MAPSS dataset generation</title>
+<desc>Four noise layers stacked top to bottom, each adding a different kind of uncertainty, feeding through C-MAPSS engine dynamics to produce the final dataset.</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<style>
+  text { font-family: sans-serif; fill: #2c2c2a; }
+  .th  { font-size: 14px; font-weight: 500; }
+  .ts  { font-size: 12px; font-weight: 400; fill: #5f5e5a; }
+</style>
+
+<!-- Layer 1: initial wear -->
+<rect x="100" y="40" width="380" height="56" rx="6" stroke-width="0.5" fill="#f1efe8" stroke="#5f5e5a"/>
+<text class="th" x="290" y="62" text-anchor="middle" dominant-baseline="central">Layer 1 — initial wear</text>
+<text class="ts" x="290" y="80" text-anchor="middle" dominant-baseline="central">e0, f0 drawn randomly from [0.99, 1.0]</text>
+<text class="ts" x="494" y="63" text-anchor="start">manufacturing variation</text>
+<text class="ts" x="494" y="79" text-anchor="start">no two engines start equal</text>
+<line x1="480" y1="68" x2="492" y2="68" stroke="#b4b2a9" stroke-width="0.5"/>
+<line x1="290" y1="96" x2="290" y2="116" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- Layer 2: degradation parameters -->
+<rect x="100" y="118" width="380" height="56" rx="6" stroke-width="0.5" fill="#f1efe8" stroke="#5f5e5a"/>
+<text class="th" x="290" y="140" text-anchor="middle" dominant-baseline="central">Layer 2 — degradation parameters</text>
+<text class="ts" x="290" y="158" text-anchor="middle" dominant-baseline="central">ak, bk drawn per engine from normal distribution</text>
+<text class="ts" x="494" y="141" text-anchor="start">rate and shape of decay</text>
+<text class="ts" x="494" y="157" text-anchor="start">deterministic once chosen</text>
+<line x1="480" y1="146" x2="492" y2="146" stroke="#b4b2a9" stroke-width="0.5"/>
+<line x1="290" y1="174" x2="290" y2="194" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- Layer 3: process noise -->
+<rect x="100" y="196" width="380" height="56" rx="6" stroke-width="0.5" fill="#e1f5ee" stroke="#0f6e56"/>
+<text class="th" x="290" y="218" text-anchor="middle" dominant-baseline="central" fill="#085041">Layer 3 — process noise</text>
+<text class="ts" x="290" y="236" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">mixture of two distributions, different variances</text>
+<text class="ts" x="494" y="211" text-anchor="start">masks the trajectory</text>
+<text class="ts" x="494" y="227" text-anchor="start">non-monotonic wiggle</text>
+<text class="ts" x="494" y="243" text-anchor="start">hard to characterise</text>
+<line x1="480" y1="224" x2="492" y2="224" stroke="#b4b2a9" stroke-width="0.5"/>
+<line x1="290" y1="252" x2="290" y2="272" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- C-MAPSS dynamics -->
+<rect x="100" y="274" width="380" height="56" rx="6" stroke-width="0.5" fill="#eeedfe" stroke="#534ab7"/>
+<text class="th" x="290" y="296" text-anchor="middle" dominant-baseline="central" fill="#26215c">C-MAPSS engine dynamics</text>
+<text class="ts" x="290" y="314" text-anchor="middle" dominant-baseline="central" fill="#534ab7">noise filtered through thermodynamic model</text>
+<text class="ts" x="494" y="297" text-anchor="start">system acts as a filter</text>
+<text class="ts" x="494" y="313" text-anchor="start">input noise reshapes output</text>
+<line x1="480" y1="302" x2="492" y2="302" stroke="#b4b2a9" stroke-width="0.5"/>
+<line x1="290" y1="330" x2="290" y2="350" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- Layer 4: measurement noise -->
+<rect x="100" y="352" width="380" height="56" rx="6" stroke-width="0.5" fill="#e1f5ee" stroke="#0f6e56"/>
+<text class="th" x="290" y="374" text-anchor="middle" dominant-baseline="central" fill="#085041">Layer 4 — measurement noise</text>
+<text class="ts" x="290" y="392" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">added directly to all sensor output channels</text>
+<text class="ts" x="494" y="375" text-anchor="start">sensor imperfection</text>
+<text class="ts" x="494" y="391" text-anchor="start">last layer before dataset</text>
+<line x1="480" y1="380" x2="492" y2="380" stroke="#b4b2a9" stroke-width="0.5"/>
+<line x1="290" y1="408" x2="290" y2="428" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- Output -->
+<rect x="160" y="430" width="260" height="22" rx="4" stroke-width="0.5" fill="#faeeda" stroke="#854f0b"/>
+<text class="ts" x="290" y="445" text-anchor="middle" dominant-baseline="central" fill="#412402">final multivariate PHM dataset</text>
+</svg>

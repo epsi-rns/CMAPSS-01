@@ -1,0 +1,87 @@
+<svg width="680" height="500" viewBox="0 0 680 500" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Why the six calculated columns exist</title>
+<desc>Six calculated columns mapped to the question each answers, grouped by purpose: understanding engine life (RUL_raw, RUL_capped, cycle_pct), understanding operating context (condition_id), and understanding engine health (dT_compressor, dT_turbine).</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<style>
+  text { font-family: Arial, sans-serif; fill: #2c2c2a; }
+  .th  { font-size: 14px; font-weight: bold; }
+  .ts  { font-size: 12px; fill: #5f5e5a; }
+</style>
+
+<!-- Raw data box -->
+<rect x="240" y="30" width="200" height="44" rx="6" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">26 raw columns</text>
+<line x1="340" y1="74" x2="340" y2="94" stroke="#888780" stroke-width="1" marker-end="url(#arrow)"/>
+<text class="ts" x="356" y="87" text-anchor="start">what question does the data NOT answer?</text>
+
+<!-- Group 1: engine life (teal) -->
+<rect x="30" y="110" width="190" height="34" rx="6" fill="#9FE1CB" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="125" y="131" text-anchor="middle" dominant-baseline="central" fill="#04342C">How much life is left?</text>
+<line x1="125" y1="144" x2="125" y2="164" stroke="#0f6e56" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="30" y="166" width="190" height="44" rx="6" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="125" y="184" text-anchor="middle" dominant-baseline="central" fill="#085041">RUL_raw</text>
+<text class="ts" x="125" y="200" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">t_max - t_current</text>
+<line x1="125" y1="210" x2="125" y2="228" stroke="#0f6e56" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="30" y="230" width="190" height="44" rx="6" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="125" y="248" text-anchor="middle" dominant-baseline="central" fill="#085041">RUL_capped</text>
+<text class="ts" x="125" y="264" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">min(RUL_raw, 125)</text>
+<line x1="125" y1="274" x2="125" y2="292" stroke="#0f6e56" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="30" y="294" width="190" height="44" rx="6" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="125" y="312" text-anchor="middle" dominant-baseline="central" fill="#085041">cycle_pct</text>
+<text class="ts" x="125" y="328" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">t / t_max</text>
+
+<text class="ts" x="125" y="364" text-anchor="middle">train sheet only</text>
+<text class="ts" x="125" y="378" text-anchor="middle">(test RUL is unknown)</text>
+<text class="ts" x="125" y="396" text-anchor="middle" fill="#0f6e56">target variable for ML</text>
+
+<!-- Group 2: operating context (purple) -->
+<rect x="245" y="110" width="190" height="34" rx="6" fill="#CECBF6" stroke="#534AB7" stroke-width="0.5"/>
+<text class="th" x="340" y="131" text-anchor="middle" dominant-baseline="central" fill="#26215C">Which flight condition?</text>
+<line x1="340" y1="144" x2="340" y2="184" stroke="#534ab7" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="245" y="186" width="190" height="66" rx="6" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<text class="th" x="340" y="207" text-anchor="middle" dominant-baseline="central" fill="#26215C">condition_id</text>
+<text class="ts" x="340" y="225" text-anchor="middle" dominant-baseline="central" fill="#534AB7">KMeans(k=6) on</text>
+<text class="ts" x="340" y="240" text-anchor="middle" dominant-baseline="central" fill="#534AB7">op_setting_1/2/3</text>
+
+<text class="ts" x="340" y="278" text-anchor="middle">train + test sheets</text>
+<text class="ts" x="340" y="294" text-anchor="middle">FD001/FD003: always 1</text>
+<text class="ts" x="340" y="310" text-anchor="middle">FD002/FD004: 1 to 6</text>
+<text class="ts" x="340" y="330" text-anchor="middle" fill="#534AB7">needed for normalization</text>
+
+<!-- Group 3: engine health (amber) -->
+<rect x="460" y="110" width="190" height="34" rx="6" fill="#FAC775" stroke="#854f0b" stroke-width="0.5"/>
+<text class="th" x="555" y="131" text-anchor="middle" dominant-baseline="central" fill="#412402">How is the engine behaving?</text>
+<line x1="555" y1="144" x2="555" y2="164" stroke="#854f0b" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="460" y="166" width="190" height="44" rx="6" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+<text class="th" x="555" y="184" text-anchor="middle" dominant-baseline="central" fill="#412402">dT_compressor</text>
+<text class="ts" x="555" y="200" text-anchor="middle" dominant-baseline="central" fill="#854f0b">T30 - T24</text>
+<line x1="555" y1="210" x2="555" y2="228" stroke="#854f0b" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="460" y="230" width="190" height="44" rx="6" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+<text class="th" x="555" y="248" text-anchor="middle" dominant-baseline="central" fill="#412402">dT_turbine</text>
+<text class="ts" x="555" y="264" text-anchor="middle" dominant-baseline="central" fill="#854f0b">T50 - T30</text>
+
+<text class="ts" x="555" y="302" text-anchor="middle">train + test sheets</text>
+<text class="ts" x="555" y="318" text-anchor="middle">HPC degradation shows</text>
+<text class="ts" x="555" y="334" text-anchor="middle">in dT_compressor first</text>
+<text class="ts" x="555" y="352" text-anchor="middle" fill="#854f0b">domain health feature</text>
+
+<!-- Divider -->
+<line x1="40" y1="410" x2="640" y2="410" stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="4 3"/>
+<text class="ts" x="125" y="434" text-anchor="middle" fill="#085041">target variable for ML training</text>
+<text class="ts" x="340" y="434" text-anchor="middle" fill="#26215c">needed for FD002/FD004 normalization</text>
+<text class="ts" x="555" y="434" text-anchor="middle" fill="#412402">domain-engineered health feature</text>
+
+<text class="ts" x="125" y="452" text-anchor="middle">train only</text>
+<text class="ts" x="340" y="452" text-anchor="middle">train + test</text>
+<text class="ts" x="555" y="452" text-anchor="middle">train + test</text>
+</svg>

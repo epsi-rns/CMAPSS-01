@@ -1,0 +1,83 @@
+<svg width="680" height="360" viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Asymmetric scoring function for RUL prediction</title>
+<desc>Score penalty plotted against prediction error d. Early predictions (d less than 0) penalised with denominator 10. Late predictions (d greater than 0) penalised harder with denominator 13. Dotted symmetric reference shown for comparison.</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<style>
+  text { font-family: sans-serif; fill: #2c2c2a; }
+  .th  { font-size: 14px; font-weight: 500; }
+  .ts  { font-size: 12px; font-weight: 400; fill: #5f5e5a; }
+</style>
+
+<!-- Axes -->
+<line x1="60"  y1="290" x2="628" y2="290" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+<line x1="340" y1="308" x2="340" y2="22"  stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- Labels -->
+<text class="ts" x="354" y="326" text-anchor="middle">d = estimated RUL − true RUL (cycles)</text>
+<text class="ts" x="20"  y="160" text-anchor="middle" transform="rotate(-90,20,160)">Penalty score s</text>
+<text class="ts" x="340" y="306" text-anchor="middle">0</text>
+
+<!-- X ticks -->
+<line x1="115" y1="290" x2="115" y2="296" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="115" y="308" text-anchor="middle">−50</text>
+<line x1="205" y1="290" x2="205" y2="296" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="205" y="308" text-anchor="middle">−30</text>
+<line x1="475" y1="290" x2="475" y2="296" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="475" y="308" text-anchor="middle">+30</text>
+<line x1="565" y1="290" x2="565" y2="296" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="565" y="308" text-anchor="middle">+50</text>
+
+<!-- Y ticks -->
+<line x1="334" y1="238" x2="340" y2="238" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="328" y="242" text-anchor="end">20</text>
+<line x1="334" y1="186" x2="340" y2="186" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="328" y="190" text-anchor="end">40</text>
+<line x1="334" y1="134" x2="340" y2="134" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="328" y="138" text-anchor="end">60</text>
+<line x1="334" y1="82"  x2="340" y2="82"  stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="328" y="86"  text-anchor="end">80</text>
+
+<!-- Gridlines -->
+<line x1="60" y1="238" x2="620" y2="238" stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="4 4"/>
+<line x1="60" y1="186" x2="620" y2="186" stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="4 4"/>
+<line x1="60" y1="134" x2="620" y2="134" stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="4 4"/>
+<line x1="340" y1="60" x2="340" y2="290" stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="3 3"/>
+
+<!-- Symmetric reference -->
+<path fill="none" stroke="#b4b2a9" stroke-width="1" stroke-dasharray="5 4"
+  d="M175,140 195,170 215,205 235,230 255,252 275,267 295,277 315,284 340,290 365,284 385,277 405,267 425,252 445,230 465,205 485,170 505,140"/>
+
+<!-- Early curve (blue) -->
+<path fill="none" stroke="#185FA5" stroke-width="2.5"
+  d="M160,150 170,164 182,179 195,194 205,240 215,254 222,261 230,267 240,272 250,273 260,276 270,279 280,282 295,286 310,287 325,289 340,290"/>
+
+<!-- Late curve (coral/red) -->
+<path fill="none" stroke="#D85A30" stroke-width="2.5"
+  d="M340,290 355,289 365,287 375,285 385,287 395,284 405,281 415,278 430,281 445,272 455,264 465,258 475,264 490,249 505,232 520,235 535,210 550,190 565,173 575,155 587,115 598,80 610,30"/>
+
+<!-- Region labels -->
+<text class="th" x="195" y="58"  text-anchor="middle">Early prediction</text>
+<text class="ts" x="195" y="74"  text-anchor="middle">d &lt; 0</text>
+<text class="ts" x="195" y="90"  text-anchor="middle">penalty: e^(−d/10) − 1</text>
+<text class="th" x="490" y="58"  text-anchor="middle">Late prediction</text>
+<text class="ts" x="490" y="74"  text-anchor="middle">d &gt; 0</text>
+<text class="ts" x="490" y="90"  text-anchor="middle">penalty: e^(d/13) − 1</text>
+
+<!-- Annotation -->
+<line x1="560" y1="148" x2="540" y2="188" stroke="#b4b2a9" stroke-width="0.5"/>
+<text class="ts" x="568" y="144" text-anchor="start">steeper slope</text>
+<text class="ts" x="568" y="158" text-anchor="start">= harsher penalty</text>
+
+<!-- Legend -->
+<rect x="62" y="36" width="204" height="58" rx="4" fill="white" fill-opacity="0.92" stroke="#d3d1c7" stroke-width="0.5"/>
+<line x1="72" y1="54"  x2="100" y2="54"  stroke="#185FA5" stroke-width="2.5"/>
+<text class="ts" x="108" y="58">Early (a1 = 10)</text>
+<line x1="72" y1="72"  x2="100" y2="72"  stroke="#D85A30" stroke-width="2.5"/>
+<text class="ts" x="108" y="76">Late (a2 = 13)</text>
+<line x1="72" y1="84"  x2="100" y2="84"  stroke="#b4b2a9" stroke-width="1" stroke-dasharray="5 4"/>
+<text class="ts" x="108" y="88" fill="#888780">Symmetric ref.</text>
+</svg>

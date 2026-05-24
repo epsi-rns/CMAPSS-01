@@ -1,0 +1,90 @@
+<svg width="680" height="380" viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Degradation trajectory family</title>
+<desc>Multiple h(t) curves with different a, b, d parameters showing how different engines degrade at different rates. All reach failure threshold at h=0.</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <clipPath id="plotclip">
+    <rect x="80" y="30" width="540" height="270"/>
+  </clipPath>
+</defs>
+<style>
+  text { font-family: sans-serif; fill: #2c2c2a; }
+  .th  { font-size: 14px; font-weight: 500; }
+  .ts  { font-size: 12px; font-weight: 400; fill: #5f5e5a; }
+</style>
+
+<!-- Axes -->
+<line x1="80" y1="300" x2="628" y2="300" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+<line x1="80" y1="300" x2="80" y2="22"  stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- Axis labels -->
+<text class="ts" x="354" y="338" text-anchor="middle">Engine cycles (t)</text>
+<text class="ts" x="28" y="165" text-anchor="middle" transform="rotate(-90,28,165)">Health index h(t)</text>
+
+<!-- Y ticks -->
+<line x1="75" y1="300" x2="80" y2="300" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="70" y="304" text-anchor="end">0</text>
+<line x1="75" y1="165" x2="80" y2="165" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="70" y="169" text-anchor="end">0.5</text>
+<line x1="75" y1="30"  x2="80" y2="30"  stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="70" y="34"  text-anchor="end">1.0</text>
+
+<!-- X ticks -->
+<line x1="80"  y1="300" x2="80"  y2="305" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="80"  y="316" text-anchor="middle">0</text>
+<line x1="215" y1="300" x2="215" y2="305" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="215" y="316" text-anchor="middle">50</text>
+<line x1="350" y1="300" x2="350" y2="305" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="350" y="316" text-anchor="middle">100</text>
+<line x1="485" y1="300" x2="485" y2="305" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="485" y="316" text-anchor="middle">150</text>
+<line x1="620" y1="300" x2="620" y2="305" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="620" y="316" text-anchor="middle">200</text>
+
+<!-- Gridlines -->
+<line x1="80" y1="165" x2="620" y2="165" stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="4 4"/>
+<line x1="80" y1="30"  x2="620" y2="30"  stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="4 4"/>
+
+<!-- Failure threshold -->
+<line x1="80" y1="300" x2="625" y2="300" stroke="#e24b4a" stroke-width="1" stroke-dasharray="6 3"/>
+<text class="ts" x="630" y="296" text-anchor="start" fill="#a32d2d">failure</text>
+
+<!-- Curve 1: slow, teal -->
+<path clip-path="url(#plotclip)" fill="none" stroke="#0F6E56" stroke-width="1.8" opacity="0.85"
+  d="M80,295 82,295 86,295 92,294 100,294 110,293 122,292 136,290 152,287 170,283 190,277 212,269 236,258 262,244 290,227 320,207 352,183 386,156 420,127 456,96 492,64 520,40 542,30"/>
+
+<!-- Curve 2: medium, blue -->
+<path clip-path="url(#plotclip)" fill="none" stroke="#185FA5" stroke-width="1.8" opacity="0.85"
+  d="M80,294 84,294 90,293 98,292 108,290 120,287 134,282 150,276 168,267 188,256 210,242 234,226 260,207 288,186 318,163 350,139 384,114 418,90 452,68 480,52 504,39 524,30"/>
+
+<!-- Curve 3: fast, coral -->
+<path clip-path="url(#plotclip)" fill="none" stroke="#993C1D" stroke-width="1.8" opacity="0.85"
+  d="M80,294 84,293 90,291 98,288 108,284 120,277 134,268 150,256 168,241 188,223 210,203 234,181 258,157 284,133 310,110 338,88 364,70 388,54 410,41 430,31 444,30"/>
+
+<!-- Curve 4: slow start steep end, purple -->
+<path clip-path="url(#plotclip)" fill="none" stroke="#534AB7" stroke-width="1.8" opacity="0.85"
+  d="M80,295 86,295 94,295 104,295 116,294 130,294 146,293 164,291 184,288 206,283 230,276 256,265 284,251 314,234 346,214 380,191 416,166 452,140 488,113 520,89 548,68 572,51 594,37 610,30"/>
+
+<!-- Curve 5: medium-fast, amber -->
+<path clip-path="url(#plotclip)" fill="none" stroke="#BA7517" stroke-width="1.8" opacity="0.85"
+  d="M80,294 84,293 90,291 98,288 108,283 120,275 134,265 150,251 168,235 188,217 210,196 234,173 258,150 282,127 306,106 330,87 352,70 372,56 390,44 406,35 418,30"/>
+
+<!-- Annotations -->
+<text class="ts" x="310" y="218" text-anchor="middle">← process noise</text>
+<text class="ts" x="310" y="230" text-anchor="middle">(non-monotonic)</text>
+<text class="ts" x="100" y="280" text-anchor="start">initial wear d</text>
+
+<!-- Legend -->
+<rect x="82" y="35" width="244" height="86" rx="4" fill="white" fill-opacity="0.92" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="ts" x="92" y="52">Different engines, different parameters:</text>
+<line x1="92" y1="64" x2="112" y2="64" stroke="#0F6E56" stroke-width="1.8"/>
+<text class="ts" x="118" y="68">a=0.001, b=1.50 — slow (~180 cycles)</text>
+<line x1="92" y1="78" x2="112" y2="78" stroke="#185FA5" stroke-width="1.8"/>
+<text class="ts" x="118" y="82">a=0.002, b=1.45 — medium (~130 cycles)</text>
+<line x1="92" y1="92" x2="112" y2="92" stroke="#993C1D" stroke-width="1.8"/>
+<text class="ts" x="118" y="96">a=0.003, b=1.40 — fast (~100 cycles)</text>
+<line x1="92" y1="106" x2="112" y2="106" stroke="#534AB7" stroke-width="1.8"/>
+<text class="ts" x="118" y="110">a=0.0015, b=1.60 — late steep drop</text>
+</svg>

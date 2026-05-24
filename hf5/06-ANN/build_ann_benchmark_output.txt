@@ -1,0 +1,113 @@
+C-MAPSS ANN Benchmark
+Architecture: input → 64 → 32 → 1
+Epochs: 500  Batch: 512  LR: 0.001
+Runs: 4 sub-datasets × 2 input types = 8 models
+
+  [FD001_PCA]
+    input_dim=2  train=20,631  test=13,096  features=PC1, PC2
+      epoch 100/500  rmse=17.7636
+      epoch 200/500  rmse=17.7218
+      epoch 300/500  rmse=17.7104
+      epoch 400/500  rmse=17.6964
+      epoch 500/500  rmse=17.6865
+    RMSE=17.7975  MAE=12.5539  NASA=815.29
+
+  [FD001_NORM]
+    input_dim=15  train=20,631  test=13,096  features=T24, T30, T50, P15...
+      epoch 100/500  rmse=17.7670
+      epoch 200/500  rmse=17.5486
+      epoch 300/500  rmse=17.4384
+      epoch 400/500  rmse=17.3664
+      epoch 500/500  rmse=17.2995
+    RMSE=18.2114  MAE=13.5197  NASA=928.52
+
+  [FD002_PCA]
+    input_dim=4  train=53,759  test=33,991  features=PC1, PC2, PC3, PC4
+      epoch 100/500  rmse=19.3669
+      epoch 200/500  rmse=19.3092
+      epoch 300/500  rmse=19.2850
+      epoch 400/500  rmse=19.2784
+      epoch 500/500  rmse=19.2601
+    RMSE=29.3010  MAE=20.5168  NASA=14423.24
+
+  [FD002_NORM]
+    input_dim=21  train=53,759  test=33,991  features=T2, T24, T30, T50...
+      epoch 100/500  rmse=18.8791
+      epoch 200/500  rmse=18.7327
+      epoch 300/500  rmse=18.6363
+      epoch 400/500  rmse=18.5764
+      epoch 500/500  rmse=18.5538
+    RMSE=29.4486  MAE=20.7347  NASA=12989.74
+
+  [FD003_PCA]
+    input_dim=3  train=24,720  test=16,596  features=PC1, PC2, PC3
+      epoch 100/500  rmse=16.5072
+      epoch 200/500  rmse=16.4186
+      epoch 300/500  rmse=16.4317
+      epoch 400/500  rmse=16.3991
+      epoch 500/500  rmse=16.3927
+    RMSE=21.8702  MAE=16.1735  NASA=2649.66
+
+  [FD003_NORM]
+    input_dim=16  train=24,720  test=16,596  features=T24, T30, T50, P15...
+      epoch 100/500  rmse=15.6047
+      epoch 200/500  rmse=15.4327
+      epoch 300/500  rmse=15.3151
+      epoch 400/500  rmse=15.2565
+      epoch 500/500  rmse=15.1600
+    RMSE=20.1572  MAE=15.2807  NASA=1783.11
+
+  [FD004_PCA]
+    input_dim=3  train=61,249  test=41,214  features=PC1, PC2, PC3
+      epoch 100/500  rmse=18.4663
+      epoch 200/500  rmse=18.4151
+      epoch 300/500  rmse=18.3915
+      epoch 400/500  rmse=18.3839
+      epoch 500/500  rmse=18.3819
+    RMSE=30.5893  MAE=23.2834  NASA=9266.68
+
+  [FD004_NORM]
+    input_dim=21  train=61,249  test=41,214  features=T2, T24, T30, T50...
+      epoch 100/500  rmse=16.9507
+      epoch 200/500  rmse=16.8007
+      epoch 300/500  rmse=16.7194
+      epoch 400/500  rmse=16.6674
+      epoch 500/500  rmse=16.6403
+    RMSE=29.6773  MAE=22.3752  NASA=7156.82
+
+======================================================================
+  BENCHMARK SUMMARY
+======================================================================
+  sub     input   dim      RMSE       MAE        NASA
+----------------------------------------------------------------------
+  FD001   PCA       2   17.7975   12.5539      815.29
+  FD001   NORM     15   18.2114   13.5197      928.52
+
+  FD002   PCA       4   29.3010   20.5168    14423.24
+  FD002   NORM     21   29.4486   20.7347    12989.74
+
+  FD003   PCA       3   21.8702   16.1735     2649.66
+  FD003   NORM     16   20.1572   15.2807     1783.11
+
+  FD004   PCA       3   30.5893   23.2834     9266.68
+  FD004   NORM     21   29.6773   22.3752     7156.82
+
+======================================================================
+
+  Best per sub-dataset (by RMSE):
+    FD001: PCA    RMSE=17.7975
+    FD002: PCA    RMSE=29.3010
+    FD003: NORM   RMSE=20.1572
+    FD004: NORM   RMSE=29.6773
+
+Output folder: .
+Files written:
+  FD001_PCA/model.pt  predictions.csv  history.csv
+  FD001_NORM/model.pt  predictions.csv  history.csv
+  FD002_PCA/model.pt  predictions.csv  history.csv
+  FD002_NORM/model.pt  predictions.csv  history.csv
+  FD003_PCA/model.pt  predictions.csv  history.csv
+  FD003_NORM/model.pt  predictions.csv  history.csv
+  FD004_PCA/model.pt  predictions.csv  history.csv
+  FD004_NORM/model.pt  predictions.csv  history.csv
+  summary.csv

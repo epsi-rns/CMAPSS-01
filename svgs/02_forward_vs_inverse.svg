@@ -1,0 +1,62 @@
+<svg width="680" height="340" viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Forward vs inverse problem in PHM</title>
+<desc>Two rows. Top: forward problem — known degradation state through C-MAPSS physics to sensor outputs (easy). Bottom: inverse problem — known sensor outputs, infer hidden degradation state (hard, the PHM task).</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<style>
+  text { font-family: sans-serif; fill: #2c2c2a; }
+  .th  { font-size: 14px; font-weight: 500; }
+  .ts  { font-size: 12px; font-weight: 400; fill: #5f5e5a; }
+</style>
+
+<!-- Header -->
+<text class="ts" x="340" y="28" text-anchor="middle">The hidden state is never directly observable.</text>
+<text class="ts" x="340" y="44" text-anchor="middle">Simulation solves forward. PHM must solve backward.</text>
+
+<!-- Divider -->
+<line x1="80" y1="185" x2="640" y2="185" stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="4 3"/>
+
+<!-- Row labels -->
+<text class="th" x="44" y="108" text-anchor="middle">Forward</text>
+<text class="ts" x="44" y="124" text-anchor="middle">simulation</text>
+<text class="ts" x="44" y="140" text-anchor="middle">easy</text>
+<text class="th" x="44" y="234" text-anchor="middle">Inverse</text>
+<text class="ts" x="44" y="250" text-anchor="middle">PHM task</text>
+<text class="ts" x="44" y="266" text-anchor="middle">hard</text>
+
+<!-- FORWARD ROW -->
+<rect x="88" y="88" width="150" height="56" rx="6" stroke-width="0.5" fill="#faeeda" stroke="#854f0b"/>
+<text class="th" x="163" y="111" text-anchor="middle" dominant-baseline="central" fill="#412402">Degradation state</text>
+<text class="ts" x="163" y="130" text-anchor="middle" dominant-baseline="central" fill="#854f0b">e(t), f(t) — known</text>
+<line x1="238" y1="116" x2="278" y2="116" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<rect x="280" y="88" width="150" height="56" rx="6" stroke-width="0.5" fill="#f1efe8" stroke="#5f5e5a"/>
+<text class="th" x="355" y="111" text-anchor="middle" dominant-baseline="central">C-MAPSS physics</text>
+<text class="ts" x="355" y="130" text-anchor="middle" dominant-baseline="central">thermodynamic model</text>
+<line x1="430" y1="116" x2="470" y2="116" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<rect x="472" y="88" width="150" height="56" rx="6" stroke-width="0.5" fill="#e1f5ee" stroke="#0f6e56"/>
+<text class="th" x="547" y="111" text-anchor="middle" dominant-baseline="central" fill="#085041">Sensor outputs</text>
+<text class="ts" x="547" y="130" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">T, P, RPM … — observed</text>
+
+<!-- INVERSE ROW -->
+<rect x="88" y="208" width="150" height="56" rx="6" stroke-width="0.5" fill="#e1f5ee" stroke="#0f6e56"/>
+<text class="th" x="163" y="231" text-anchor="middle" dominant-baseline="central" fill="#085041">Sensor outputs</text>
+<text class="ts" x="163" y="250" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">T, P, RPM … — observed</text>
+<line x1="238" y1="236" x2="278" y2="236" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<rect x="280" y="208" width="150" height="56" rx="6" stroke-width="0.5" fill="#eeedfe" stroke="#534ab7"/>
+<text class="th" x="355" y="231" text-anchor="middle" dominant-baseline="central" fill="#26215c">ML / PHM algorithm</text>
+<text class="ts" x="355" y="250" text-anchor="middle" dominant-baseline="central" fill="#534ab7">infer hidden state</text>
+<line x1="430" y1="236" x2="470" y2="236" stroke="#888780" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<rect x="472" y="208" width="150" height="56" rx="6" stroke-width="0.5" fill="#faeeda" stroke="#854f0b"/>
+<text class="th" x="547" y="231" text-anchor="middle" dominant-baseline="central" fill="#412402">RUL estimate</text>
+<text class="ts" x="547" y="250" text-anchor="middle" dominant-baseline="central" fill="#854f0b">e(t), f(t) — inferred</text>
+
+<!-- ? on inverse arrow -->
+<text font-size="16" font-weight="700" font-family="sans-serif" fill="#993c1d" x="259" y="230" text-anchor="middle">?</text>
+</svg>

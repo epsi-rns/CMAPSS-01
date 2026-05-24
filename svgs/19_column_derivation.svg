@@ -1,0 +1,133 @@
+<svg width="680" height="620" viewBox="0 0 680 620" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Additional column derivation: from raw columns to calculated columns</title>
+<desc>Six calculated columns traced back to their source columns. Three groups: temperature deltas from T24/T30/T50, RUL group from unit_number and time_cycles, condition_id from op_setting columns via KMeans. RUL sheet extras at the bottom.</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<style>
+  text { font-family: Arial, sans-serif; fill: #2c2c2a; }
+  .th  { font-size: 14px; font-weight: bold; }
+  .ts  { font-size: 12px; fill: #5f5e5a; }
+</style>
+
+<!-- Source columns header -->
+<text class="ts" x="340" y="26" text-anchor="middle">Raw source columns (cols 1–26)</text>
+<line x1="40" y1="32" x2="640" y2="32" stroke="#d3d1c7" stroke-width="0.5"/>
+
+<!-- unit_number -->
+<rect x="40" y="40" width="110" height="44" rx="4" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text class="th" x="95" y="58" text-anchor="middle" dominant-baseline="central">unit_number</text>
+<text class="ts" x="95" y="74" text-anchor="middle" dominant-baseline="central">col A</text>
+
+<!-- time_cycles -->
+<rect x="158" y="40" width="110" height="44" rx="4" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text class="th" x="213" y="58" text-anchor="middle" dominant-baseline="central">time_cycles</text>
+<text class="ts" x="213" y="74" text-anchor="middle" dominant-baseline="central">col B</text>
+
+<!-- op_settings -->
+<rect x="276" y="40" width="130" height="44" rx="4" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text class="th" x="341" y="55" text-anchor="middle" dominant-baseline="central">op_setting_1/2/3</text>
+<text class="ts" x="341" y="74" text-anchor="middle" dominant-baseline="central">cols C D E</text>
+
+<!-- T24 -->
+<rect x="414" y="40" width="60" height="44" rx="4" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text class="th" x="444" y="58" text-anchor="middle" dominant-baseline="central">T24</text>
+<text class="ts" x="444" y="74" text-anchor="middle" dominant-baseline="central">col G</text>
+
+<!-- T30 -->
+<rect x="482" y="40" width="60" height="44" rx="4" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text class="th" x="512" y="58" text-anchor="middle" dominant-baseline="central">T30</text>
+<text class="ts" x="512" y="74" text-anchor="middle" dominant-baseline="central">col H</text>
+
+<!-- T50 -->
+<rect x="550" y="40" width="60" height="44" rx="4" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text class="th" x="580" y="58" text-anchor="middle" dominant-baseline="central">T50</text>
+<text class="ts" x="580" y="74" text-anchor="middle" dominant-baseline="central">col I</text>
+
+<!-- GROUP 1: TEMPERATURE DELTAS -->
+<line x1="444" y1="84" x2="444" y2="160" stroke="#0F6E56" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="512" y1="84" x2="480" y2="160" stroke="#0F6E56" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="512" y1="84" x2="546" y2="160" stroke="#0F6E56" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="580" y1="84" x2="546" y2="160" stroke="#0F6E56" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="414" y="162" width="130" height="56" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="th" x="479" y="183" text-anchor="middle" dominant-baseline="central" fill="#085041">dT_compressor</text>
+<text class="ts" x="479" y="201" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">T30 - T24</text>
+
+<rect x="550" y="162" width="110" height="56" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="th" x="605" y="183" text-anchor="middle" dominant-baseline="central" fill="#085041">dT_turbine</text>
+<text class="ts" x="605" y="201" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">T50 - T30</text>
+
+<text class="ts" x="479" y="234" text-anchor="middle">temp rise across HPC</text>
+<text class="ts" x="479" y="248" text-anchor="middle">train + test</text>
+<text class="ts" x="605" y="234" text-anchor="middle">temp drop, turbines</text>
+<text class="ts" x="605" y="248" text-anchor="middle">train + test</text>
+
+<!-- GROUP 2: RUL COLUMNS -->
+<line x1="95"  y1="84" x2="155" y2="270" stroke="#854F0B" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="213" y1="84" x2="175" y2="270" stroke="#854F0B" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="213" y1="84" x2="243" y2="270" stroke="#854F0B" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="213" y1="84" x2="313" y2="270" stroke="#854F0B" stroke-width="1" marker-end="url(#arrow)"/>
+
+<!-- t_max intermediate -->
+<rect x="100" y="150" width="160" height="30" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text class="ts" x="180" y="165" text-anchor="middle" dominant-baseline="central" fill="#412402">t_max = groupby(unit).max(cycle)</text>
+<line x1="180" y1="180" x2="165" y2="270" stroke="#854F0B" stroke-width="0.8" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+<line x1="180" y1="180" x2="243" y2="270" stroke="#854F0B" stroke-width="0.8" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+<line x1="180" y1="180" x2="313" y2="270" stroke="#854F0B" stroke-width="0.8" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+<rect x="40"  y="272" width="110" height="56" rx="6" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text class="th" x="95"  y="293" text-anchor="middle" dominant-baseline="central" fill="#412402">RUL_raw</text>
+<text class="ts" x="95"  y="311" text-anchor="middle" dominant-baseline="central" fill="#854F0B">t_max - t</text>
+
+<rect x="158" y="272" width="120" height="56" rx="6" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text class="th" x="218" y="293" text-anchor="middle" dominant-baseline="central" fill="#412402">RUL_capped</text>
+<text class="ts" x="218" y="311" text-anchor="middle" dominant-baseline="central" fill="#854F0B">min(RUL_raw, 125)</text>
+
+<rect x="286" y="272" width="110" height="56" rx="6" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text class="th" x="341" y="293" text-anchor="middle" dominant-baseline="central" fill="#412402">cycle_pct</text>
+<text class="ts" x="341" y="311" text-anchor="middle" dominant-baseline="central" fill="#854F0B">t / t_max</text>
+
+<text class="ts" x="95"  y="344" text-anchor="middle">counts down to 0</text>
+<text class="ts" x="218" y="344" text-anchor="middle">ML target</text>
+<text class="ts" x="341" y="344" text-anchor="middle">0=new, 1=failure</text>
+<text class="ts" x="218" y="360" text-anchor="middle">train only</text>
+
+<!-- GROUP 3: CONDITION_ID -->
+<line x1="341" y1="84" x2="341" y2="400" stroke="#534AB7" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="276" y="402" width="130" height="66" rx="6" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<text class="th" x="341" y="424" text-anchor="middle" dominant-baseline="central" fill="#26215C">condition_id</text>
+<text class="ts" x="341" y="442" text-anchor="middle" dominant-baseline="central" fill="#534AB7">KMeans(k=6)</text>
+<text class="ts" x="341" y="456" text-anchor="middle" dominant-baseline="central" fill="#534AB7">Python only</text>
+
+<text class="ts" x="341" y="486" text-anchor="middle">1 for FD001/FD003</text>
+<text class="ts" x="341" y="500" text-anchor="middle">1-6 for FD002/FD004</text>
+<text class="ts" x="341" y="514" text-anchor="middle">train + test</text>
+
+<!-- RUL SHEET EXTRAS -->
+<line x1="40" y1="534" x2="640" y2="534" stroke="#888780" stroke-width="0.8"/>
+<text class="ts" x="340" y="550" text-anchor="middle">RUL sheet only — derived from test sheet + RUL file</text>
+
+<rect x="40"  y="560" width="80"  height="36" rx="4" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text class="th" x="80"  y="572" text-anchor="middle" dominant-baseline="central">unit</text>
+<text class="ts" x="80"  y="586" text-anchor="middle" dominant-baseline="central">original</text>
+
+<rect x="128" y="560" width="60"  height="36" rx="4" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text class="th" x="158" y="572" text-anchor="middle" dominant-baseline="central">RUL</text>
+<text class="ts" x="158" y="586" text-anchor="middle" dominant-baseline="central">original</text>
+
+<line x1="230" y1="578" x2="250" y2="578" stroke="#888780" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="254" y="560" width="110" height="36" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="th" x="309" y="572" text-anchor="middle" dominant-baseline="central" fill="#085041">last_cycle</text>
+<text class="ts" x="309" y="586" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">max(test.cycle)</text>
+
+<line x1="368" y1="578" x2="388" y2="578" stroke="#888780" stroke-width="1" marker-end="url(#arrow)"/>
+
+<rect x="392" y="560" width="140" height="36" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="th" x="462" y="572" text-anchor="middle" dominant-baseline="central" fill="#085041">total_life_est</text>
+<text class="ts" x="462" y="586" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">last_cycle + RUL</text>
+</svg>

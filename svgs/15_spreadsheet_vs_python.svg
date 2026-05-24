@@ -1,0 +1,69 @@
+<svg width="680" height="440" viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Spreadsheet formula vs Python: which columns can be done where</title>
+<desc>Two columns. Left: what spreadsheet formulas can handle — row-level arithmetic and per-engine aggregation with array formulas. Right: what requires Python — KMeans iterative optimization that needs global state and multiple passes.</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<style>
+  text { font-family: Arial, sans-serif; fill: #2c2c2a; }
+  .th  { font-size: 14px; font-weight: bold; }
+  .ts  { font-size: 12px; fill: #5f5e5a; }
+</style>
+
+<!-- Column headers -->
+<rect x="40"  y="30" width="270" height="40" rx="6" fill="#9FE1CB" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="175" y="50" text-anchor="middle" dominant-baseline="central" fill="#04342C">Spreadsheet formula</text>
+
+<rect x="370" y="30" width="270" height="40" rx="6" fill="#F0997B" stroke="#993c1d" stroke-width="0.5"/>
+<text class="th" x="505" y="50" text-anchor="middle" dominant-baseline="central" fill="#4A1B0C">Python required</text>
+
+<!-- Divider -->
+<line x1="340" y1="30" x2="340" y2="420" stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="5 4"/>
+
+<!-- Left: dT_compressor -->
+<rect x="40" y="90" width="270" height="56" rx="6" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="175" y="111" text-anchor="middle" dominant-baseline="central" fill="#085041">dT_compressor</text>
+<text class="ts" x="175" y="129" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">=H2-G2  (T30 minus T24)</text>
+<text class="ts" x="175" y="160" text-anchor="middle">one row, two source cells</text>
+<text class="ts" x="175" y="174" text-anchor="middle">no memory of other rows needed</text>
+
+<!-- Left: dT_turbine -->
+<rect x="40" y="192" width="270" height="56" rx="6" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="175" y="213" text-anchor="middle" dominant-baseline="central" fill="#085041">dT_turbine</text>
+<text class="ts" x="175" y="231" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">=I2-H2  (T50 minus T30)</text>
+<text class="ts" x="175" y="262" text-anchor="middle">same — pure arithmetic</text>
+
+<!-- Left: RUL group -->
+<rect x="40" y="282" width="270" height="66" rx="6" fill="#e1f5ee" stroke="#0f6e56" stroke-width="1"/>
+<text class="th" x="175" y="300" text-anchor="middle" dominant-baseline="central" fill="#085041">RUL_raw, RUL_capped, cycle_pct</text>
+<text class="ts" x="175" y="318" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">=MAX(IF($A:$A=$A2,$B:$B))-B2</text>
+<text class="ts" x="175" y="334" text-anchor="middle" dominant-baseline="central" fill="#0f6e56">Ctrl+Shift+Enter in LO Calc</text>
+<text class="ts" x="175" y="364" text-anchor="middle">needs MAX across matching rows</text>
+<text class="ts" x="175" y="378" text-anchor="middle">spreadsheet handles with array formula</text>
+<text class="ts" x="175" y="392" text-anchor="middle">slow on large files but correct</text>
+
+<!-- Right: condition_id -->
+<rect x="370" y="90" width="270" height="56" rx="6" fill="#faece7" stroke="#993c1d" stroke-width="1"/>
+<text class="th" x="505" y="111" text-anchor="middle" dominant-baseline="central" fill="#4a1b0c">condition_id</text>
+<text class="ts" x="505" y="129" text-anchor="middle" dominant-baseline="central" fill="#712b13">KMeans(k=6) clustering</text>
+<text class="ts" x="505" y="160" text-anchor="middle">requires iterative algorithm</text>
+<text class="ts" x="505" y="174" text-anchor="middle">not expressible as cell formula</text>
+
+<!-- Right: why box -->
+<rect x="370" y="196" width="270" height="160" rx="6" fill="#f1efe8" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="th" x="505" y="218" text-anchor="middle" fill="#2c2c2a">Why KMeans cannot be a formula</text>
+<text class="ts" x="505" y="240" text-anchor="middle">Step 1: place k centroids randomly</text>
+<text class="ts" x="505" y="256" text-anchor="middle">Step 2: assign every row to nearest</text>
+<text class="ts" x="505" y="272" text-anchor="middle">Step 3: recompute centroids</text>
+<text class="ts" x="505" y="288" text-anchor="middle">Step 4: repeat until stable</text>
+<line x1="386" y1="300" x2="624" y2="300" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="ts" x="505" y="320" text-anchor="middle">needs global state across all rows</text>
+<text class="ts" x="505" y="336" text-anchor="middle">needs iteration until convergence</text>
+
+<!-- Footer -->
+<line x1="40" y1="415" x2="640" y2="415" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="ts" x="175" y="432" text-anchor="middle" fill="#085041">traceable in spreadsheet</text>
+<text class="ts" x="505" y="432" text-anchor="middle" fill="#712b13">value + comment in spreadsheet</text>
+</svg>

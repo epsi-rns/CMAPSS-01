@@ -1,0 +1,4 @@
+data = h5read('cmapss_basic_FD001.h5', '/train/data');
+cols = h5readatt('cmapss_basic_FD001.h5', '/train/data', 'columns');
+T = array2table(data', 'VariableNames', cols);
+head(T, 10)

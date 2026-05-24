@@ -1,0 +1,83 @@
+<svg width="680" height="520" viewBox="0 0 680 520" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Equations for all six calculated columns</title>
+<desc>Two sections. Top: five spreadsheet-formula columns with their equations. Bottom: KMeans algorithm equations — objective function, assignment step, update step, and convergence condition.</desc>
+<style>
+  text { font-family: Arial, sans-serif; fill: #2c2c2a; }
+  .th  { font-size: 14px; font-weight: bold; }
+  .ts  { font-size: 12px; fill: #5f5e5a; }
+</style>
+
+<!-- Section A header -->
+<text class="th" x="40" y="28" text-anchor="start">Spreadsheet formulas (columns AD–AH, train sheet)</text>
+<line x1="40" y1="34" x2="640" y2="34" stroke="#d3d1c7" stroke-width="0.5"/>
+
+<!-- dT_compressor -->
+<rect x="40" y="44" width="130" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="105" y="59" text-anchor="middle" dominant-baseline="central" fill="#085041">dT_compressor</text>
+<text class="ts" x="182" y="59" text-anchor="start">= T30 - T24</text>
+<text class="ts" x="340" y="59" text-anchor="start">temperature rise across HPC</text>
+
+<!-- dT_turbine -->
+<rect x="40" y="82" width="130" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="105" y="97" text-anchor="middle" dominant-baseline="central" fill="#085041">dT_turbine</text>
+<text class="ts" x="182" y="97" text-anchor="start">= T50 - T30</text>
+<text class="ts" x="340" y="97" text-anchor="start">temperature drop across turbines</text>
+
+<!-- RUL_raw -->
+<rect x="40" y="120" width="130" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="105" y="135" text-anchor="middle" dominant-baseline="central" fill="#085041">RUL_raw</text>
+<text class="ts" x="182" y="128" text-anchor="start">=MAX(IF($A:$A=A_row, $B:$B)) - B_row</text>
+<text class="ts" x="182" y="144" text-anchor="start">LO Calc: Ctrl+Shift+Enter (array formula)</text>
+<text class="ts" x="460" y="135" text-anchor="start">t_max(engine) - t_current</text>
+
+<!-- RUL_capped -->
+<rect x="40" y="162" width="130" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="105" y="177" text-anchor="middle" dominant-baseline="central" fill="#085041">RUL_capped</text>
+<text class="ts" x="182" y="177" text-anchor="start">=MIN(RUL_raw_cell, 125)</text>
+<text class="ts" x="460" y="177" text-anchor="start">clamp target at 125 max</text>
+
+<!-- cycle_pct -->
+<rect x="40" y="200" width="130" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="105" y="215" text-anchor="middle" dominant-baseline="central" fill="#085041">cycle_pct</text>
+<text class="ts" x="182" y="208" text-anchor="start">=B_row / MAX(IF($A:$A=A_row, $B:$B))</text>
+<text class="ts" x="182" y="224" text-anchor="start">LO Calc: Ctrl+Shift+Enter (array formula)</text>
+<text class="ts" x="460" y="215" text-anchor="start">t_current / t_max   (0=new, 1=failure)</text>
+
+<!-- Section B header -->
+<line x1="40" y1="250" x2="640" y2="250" stroke="#888780" stroke-width="0.8"/>
+<text class="th" x="40" y="270" text-anchor="start">KMeans equations (condition_id — Python only)</text>
+<line x1="40" y1="276" x2="640" y2="276" stroke="#d3d1c7" stroke-width="0.5"/>
+
+<!-- Objective -->
+<rect x="40" y="286" width="180" height="30" rx="4" fill="#EEEDFE" stroke="#534ab7" stroke-width="0.5"/>
+<text class="th" x="130" y="301" text-anchor="middle" dominant-baseline="central" fill="#26215C">Objective (minimize)</text>
+<text class="ts" x="232" y="294" text-anchor="start">J = sum over all rows of  ||x_i - mu_c(i)||^2</text>
+<text class="ts" x="460" y="294" text-anchor="start">sum of squared distances</text>
+<text class="ts" x="460" y="308" text-anchor="start">to assigned centroid</text>
+
+<!-- Assignment -->
+<rect x="40" y="330" width="180" height="30" rx="4" fill="#EEEDFE" stroke="#534ab7" stroke-width="0.5"/>
+<text class="th" x="130" y="345" text-anchor="middle" dominant-baseline="central" fill="#26215C">Assignment step</text>
+<text class="ts" x="232" y="338" text-anchor="start">c(i) = argmin_k  ||x_i - mu_k||^2</text>
+<text class="ts" x="232" y="354" text-anchor="start">for each row i, find nearest centroid k</text>
+<text class="ts" x="460" y="345" text-anchor="start">repeated for all rows each iteration</text>
+
+<!-- Update -->
+<rect x="40" y="374" width="180" height="30" rx="4" fill="#EEEDFE" stroke="#534ab7" stroke-width="0.5"/>
+<text class="th" x="130" y="389" text-anchor="middle" dominant-baseline="central" fill="#26215C">Update step</text>
+<text class="ts" x="232" y="382" text-anchor="start">mu_k = mean of all x_i where c(i) = k</text>
+<text class="ts" x="232" y="398" text-anchor="start">recompute each centroid as cluster mean</text>
+<text class="ts" x="460" y="389" text-anchor="start">centroids shift each iteration</text>
+
+<!-- Convergence -->
+<rect x="40" y="418" width="180" height="30" rx="4" fill="#EEEDFE" stroke="#534ab7" stroke-width="0.5"/>
+<text class="th" x="130" y="433" text-anchor="middle" dominant-baseline="central" fill="#26215C">Convergence</text>
+<text class="ts" x="232" y="426" text-anchor="start">repeat until mu_k stops changing</text>
+<text class="ts" x="232" y="442" text-anchor="start">or max_iter reached</text>
+<text class="ts" x="460" y="433" text-anchor="start">our run: inertia = 0.41 (near-perfect)</text>
+
+<!-- Notation key -->
+<line x1="40" y1="462" x2="640" y2="462" stroke="#d3d1c7" stroke-width="0.5" stroke-dasharray="3 3"/>
+<text class="ts" x="40" y="480" text-anchor="start">x_i = one row's (op_setting_1, op_setting_2, op_setting_3)</text>
+<text class="ts" x="40" y="496" text-anchor="start">mu_k = centroid of cluster k     ||...|| = Euclidean distance     c(i) = assigned cluster for row i</text>
+</svg>

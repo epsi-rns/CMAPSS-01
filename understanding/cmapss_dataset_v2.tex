@@ -1,0 +1,701 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Packages ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{colortbl}
+
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, citecolor=black}
+
+% --- Page style ---
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textit{Study Notes: C-MAPSS Dataset — Deep Reference}}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[C]{\small\textit{``I'm not stupid, I'm just slow''}}
+
+% --- Section style ---
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{}{0em}{}
+
+% --- Highlight boxes ---
+\newmdenv[
+  backgroundcolor=gray!8,
+  linecolor=gray!40,
+  linewidth=0.8pt,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt,
+  skipabove=8pt,
+  skipbelow=8pt
+]{keybox}
+
+\newmdenv[
+  backgroundcolor=orange!6,
+  linecolor=orange!40,
+  linewidth=0.8pt,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt,
+  skipabove=8pt,
+  skipbelow=8pt
+]{insightbox}
+
+% --- Table row colors ---
+\definecolor{grpA}{RGB}{225, 245, 238}
+\definecolor{grpB}{RGB}{238, 237, 254}
+\definecolor{grpC}{RGB}{250, 238, 218}
+\definecolor{grpD}{RGB}{250, 236, 231}
+\definecolor{grpE}{RGB}{230, 241, 251}
+\definecolor{grpF}{RGB}{234, 243, 222}
+\definecolor{grpG}{RGB}{251, 234, 240}
+\definecolor{grpH}{RGB}{241, 239, 232}
+
+\captionsetup{font=small, labelfont=bf, skip=4pt}
+
+% -------------------------------------------------------------------
+\begin{document}
+% -------------------------------------------------------------------
+
+{\Large\bfseries Dataset Notes: C-MAPSS --- Deep Reference}
+
+\smallskip
+{\small Saxena, Goebel, Simon, Eklund \quad --- \quad PHM'08 dataset \quad --- \quad
+\textit{Column-by-column edition}}
+
+\medskip\hrule
+
+\tableofcontents
+
+\bigskip\hrule\bigskip
+
+% -------------------------------------------------------------------
+\section{Overview: Four Sub-Datasets}
+% -------------------------------------------------------------------
+
+Figure~\ref{fig:matrix} shows the four C-MAPSS sub-datasets and their
+key properties. All share the same 26-column file format.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{09_dataset_matrix.png}
+  \caption{The four C-MAPSS sub-datasets. FD001 is simplest
+  (1 condition, 1 fault mode). FD004 is hardest
+  (6 conditions, 2 fault modes).}
+  \label{fig:matrix}
+\end{figure}
+
+% -------------------------------------------------------------------
+\section{The Three Files and Their Different Lengths}
+% -------------------------------------------------------------------
+
+\subsection{Why the lengths differ}
+
+Each sub-dataset produces three files. They differ in length because
+they represent the same engines at different levels of granularity.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{18_sheet_length_relationship.png}
+  \caption{The three sheets for FD001. Train and test are
+  cycle-level (many rows per engine). RUL is engine-level
+  (one row per engine). The bottom table summarises the
+  three granularities.}
+  \label{fig:lengths}
+\end{figure}
+
+\begin{center}
+\small
+\begin{tabular}{@{}llrp{6cm}@{}}
+  \toprule
+  File & Granularity & FD001 rows & Why \\
+  \midrule
+  \texttt{train\_FD001.txt} & one row per cycle & 20,631
+    & 100 engines $\times$ avg 206 cycles to failure \\
+  \texttt{test\_FD001.txt}  & one row per cycle & 13,096
+    & 100 engines $\times$ avg 131 cycles (truncated) \\
+  \texttt{RUL\_FD001.txt}   & one row per engine & 100
+    & one RUL value per test engine \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{How the three files connect}
+
+The link between all three files is \texttt{unit\_number}.
+It is the key for any join operation.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{10_train_test_rul_relationship.png}
+  \caption{The relationship between the three files for one engine.
+  The train file runs to failure. The test file stops at $t^*$.
+  The RUL file gives one number per engine: the true cycles
+  remaining at $t^*$.}
+  \label{fig:filerel}
+\end{figure}
+
+\begin{keybox}
+\textbf{The three files are three zoom levels of the same engines:}
+
+\medskip
+\begin{tabular}{@{}lll@{}}
+  \texttt{train} & cycle-level & full life, all sensors, all cycles \\
+  \texttt{test}  & cycle-level & partial life, sensors only \\
+  \texttt{RUL}   & engine-level & one number: true RUL at cut point \\
+\end{tabular}
+
+\medskip
+They are connected by \texttt{unit\_number}. Analysis that combines
+files must always join on this column.
+\end{keybox}
+
+\subsection{What this means for analysis}
+
+Different questions require different combinations:
+
+\begin{center}
+\small
+\begin{tabular}{@{}lp{4.5cm}p{5cm}@{}}
+  \toprule
+  Question & Files used & How \\
+  \midrule
+  What does degradation look like? &
+    train only &
+    Plot sensor vs cycle for each engine \\
+  How well did I predict RUL? &
+    test + RUL, join on unit\_number &
+    Compare predicted RUL to true RUL \\
+  What is the engine lifespan distribution? &
+    RUL + last\_cycle (v3) &
+    total\_life\_est = last\_cycle + RUL \\
+  Do long-lived engines degrade differently? &
+    train + RUL, join on unit\_number &
+    Group train rows by engine life length \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+% -------------------------------------------------------------------
+\section{Input Columns: All 26 Raw Columns}
+% -------------------------------------------------------------------
+
+Every \texttt{train} and \texttt{test} row has 26 columns.
+They are grouped below by physical meaning.
+Figure~\ref{fig:engine} shows where each group lives on the engine.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{03_cmapss_engine_schematic.png}
+  \caption{C-MAPSS turbofan engine. Sensors measure temperatures
+  and pressures at inlet, inter-stage, and outlet locations.
+  The amber HPC module is the one degraded in FD001/FD002.}
+  \label{fig:engine}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{All 26 raw input columns grouped by physical meaning.}
+\label{tab:allcols}
+\small
+\begin{tabular}{@{}r >{\ttfamily}l l p{6.8cm}@{}}
+\toprule
+Col & \normalfont Name & Units & Physical meaning \\
+\midrule
+
+\rowcolor{grpA}
+\multicolumn{4}{@{}l}{\textbf{Group A — Identifiers}} \\
+\rowcolor{grpA}
+1  & unit\_number  & ---    &
+  Engine ID. Integer. Resets per file.
+  Every analysis groups or filters on this. \\
+\rowcolor{grpA}
+2  & time\_cycles  & cycles &
+  Cycle counter per engine. Starts at 1.
+  One cycle $\approx$ one flight. \\
+
+\rowcolor{grpB}
+\multicolumn{4}{@{}l}{\textbf{Group B — Operating conditions}} \\
+\rowcolor{grpB}
+3  & op\_setting\_1 & ft    &
+  Altitude. Controls ambient pressure and temperature.
+  Ranges 0--42,000\,ft across 6 conditions. \\
+\rowcolor{grpB}
+4  & op\_setting\_2 & ---   &
+  Mach number. Flight speed as fraction of speed of sound.
+  Ranges 0--0.84. \\
+\rowcolor{grpB}
+5  & op\_setting\_3 & ---   &
+  Throttle resolver angle (TRA). Commanded thrust level.
+  Ranges 20--100. Constant within FD001/FD003. \\
+
+\rowcolor{grpC}
+\multicolumn{4}{@{}l}{\textbf{Group C — Temperatures} (total = stagnation, measures enthalpy)} \\
+\rowcolor{grpC}
+6  & T2     & \textdegree R &
+  Total temperature at fan inlet. Reflects ambient conditions.
+  Jumps dramatically across flight conditions. \\
+\rowcolor{grpC}
+7  & T24    & \textdegree R &
+  Total temperature at LPC outlet / HPC inlet.
+  Rises as air is compressed in LPC. \\
+\rowcolor{grpC}
+8  & T30    & \textdegree R &
+  Total temperature at HPC outlet / combustor inlet.
+  Key health indicator: rises when HPC degrades. \\
+\rowcolor{grpC}
+9  & T50    & \textdegree R &
+  Total temperature at LPT outlet.
+  Reflects turbine work extraction and combustor output. \\
+
+\rowcolor{grpD}
+\multicolumn{4}{@{}l}{\textbf{Group D — Pressures}} \\
+\rowcolor{grpD}
+10 & P2     & psia &
+  Total pressure at fan inlet. Ambient total pressure.
+  Drops at altitude. \\
+\rowcolor{grpD}
+11 & P15    & psia &
+  Total pressure in bypass duct (between fan and LPC).
+  Reflects fan performance. \\
+\rowcolor{grpD}
+12 & P30    & psia &
+  Total pressure at HPC outlet. Main compression output.
+  Falls as HPC degrades. \\
+\rowcolor{grpD}
+16 & Ps30   & psia &
+  Static pressure at HPC outlet (no velocity component).
+  Related to P30 but measured differently. \\
+
+\rowcolor{grpE}
+\multicolumn{4}{@{}l}{\textbf{Group E — Speeds}} \\
+\rowcolor{grpE}
+13 & Nf     & rpm &
+  Physical fan speed. Actual rotational speed of the fan shaft.
+  Controlled by fan-speed controller. \\
+\rowcolor{grpE}
+14 & Nc     & rpm &
+  Physical core speed. Actual rotational speed of the
+  HPC/HPT/combustor shaft. \\
+\rowcolor{grpE}
+18 & NRf    & rpm &
+  Corrected fan speed. Adjusted for inlet conditions:
+  $NR_f = N_f / \sqrt{T_2/T_{\text{ref}}}$.
+  Comparable across conditions. \\
+\rowcolor{grpE}
+19 & NRc    & rpm &
+  Corrected core speed. Same correction applied to $N_c$:
+  $NR_c = N_c / \sqrt{T_2/T_{\text{ref}}}$.
+  Comparable across conditions. \\
+
+\rowcolor{grpF}
+\multicolumn{4}{@{}l}{\textbf{Group F — Flow ratios and combustion}} \\
+\rowcolor{grpF}
+15 & epr    & --- &
+  Engine pressure ratio $P_{50}/P_2$. Overall pressure
+  rise through the engine. Thrust indicator. \\
+\rowcolor{grpF}
+17 & phi    & pps/psi &
+  Fuel flow / $P_{s30}$ ratio. Normalised fuel flow.
+  Rises when HPC pressure drops due to degradation. \\
+\rowcolor{grpF}
+20 & BPR    & --- &
+  Bypass ratio. Mass flow through bypass duct divided by
+  core mass flow. Reflects fan/core balance. \\
+\rowcolor{grpF}
+21 & farB   & --- &
+  Burner fuel-air ratio. Mass of fuel per mass of air
+  in the combustor. Combustion efficiency indicator. \\
+\rowcolor{grpF}
+22 & htBleed & --- &
+  Bleed enthalpy. Energy extracted from the compressor
+  for aircraft systems (cabin air, de-icing). \\
+
+\rowcolor{grpG}
+\multicolumn{4}{@{}l}{\textbf{Group G — Controller demands}} \\
+\rowcolor{grpG}
+23 & Nf\_dmd      & rpm &
+  Demanded fan speed. The speed the controller is
+  targeting. Compare to $N_f$ to see control error. \\
+\rowcolor{grpG}
+24 & PCNfR\_dmd   & rpm &
+  Demanded corrected fan speed.
+  The corrected-speed target from the controller. \\
+
+\rowcolor{grpH}
+\multicolumn{4}{@{}l}{\textbf{Group H — Coolant bleeds}} \\
+\rowcolor{grpH}
+25 & W31    & lbm/s &
+  HPT coolant bleed. Air bled from HPC to cool the
+  high-pressure turbine blades. \\
+\rowcolor{grpH}
+26 & W32    & lbm/s &
+  LPT coolant bleed. Air bled from HPC to cool the
+  low-pressure turbine blades. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{insightbox}
+\textbf{Why corrected speeds (NRf, NRc) matter for FD002/FD004.}
+Physical speeds $N_f$ and $N_c$ depend on inlet temperature.
+At high altitude (cold air), the same thrust requires different RPM
+than at sea level. Corrected speeds remove this dependency, making
+the values comparable across flight conditions. For single-condition
+sub-datasets (FD001/FD003) this distinction is less important.
+\end{insightbox}
+
+\begin{keybox}
+\textbf{Which columns carry degradation signal?}
+HPC degradation (FD001/FD002) primarily shows up in:
+T30 $\uparrow$ (outlet temperature rises),
+P30 $\downarrow$ (outlet pressure falls),
+phi $\uparrow$ (more fuel needed to maintain thrust),
+Ps30 $\downarrow$.
+The other sensors change too, but these four are the most direct.
+\end{keybox}
+
+% -------------------------------------------------------------------
+\section{Additional Input Columns}
+% -------------------------------------------------------------------
+
+These three columns are not in the raw files. They are derived
+from the 26 raw columns and appended in the v3 spreadsheet.
+They appear on both \texttt{train} and \texttt{test} sheets.
+
+\subsection{condition\_id}
+
+For FD002 and FD004, raw sensor values are not comparable across
+cycles because the engine operates at different flight conditions.
+Figure~\ref{fig:condproblem} shows this problem clearly.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{12_multi_condition_problem.png}
+  \caption{Top: raw $T_2$ values jumping between six bands as the
+  engine switches flight conditions --- not degradation signal.
+  Bottom: after condition-wise normalisation, the health signal
+  becomes visible.}
+  \label{fig:condproblem}
+\end{figure}
+
+\texttt{condition\_id} assigns an integer 1--6 to each row
+identifying which of the six flight conditions that cycle belongs to.
+It is computed by KMeans clustering on the three operating setting
+columns, as shown in Figure~\ref{fig:normpipeline}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\textwidth]{13_normalization_pipeline.png}
+  \caption{How \texttt{condition\_id} is produced.
+  KMeans$(k=6)$ is fitted on the train set and applied to both
+  train and test. For FD001/FD003, all rows receive
+  \texttt{condition\_id} = 1.}
+  \label{fig:normpipeline}
+\end{figure}
+
+The KMeans model minimises within-cluster sum of squared distances:
+
+\begin{equation}
+  J = \sum_{i=1}^{n} \left\| x_i - \mu_{c(i)} \right\|^2
+  \label{eq:kmeans_obj}
+\end{equation}
+
+where $x_i = (\texttt{op\_setting\_1}_i,\, \texttt{op\_setting\_2}_i,\,
+\texttt{op\_setting\_3}_i)$,
+$\mu_k$ is the centroid of cluster $k$, and
+$c(i) = \arg\min_k \|x_i - \mu_k\|^2$ is the assigned cluster.
+
+\begin{keybox}
+\textbf{Important:} \texttt{condition\_id} labels are not comparable
+across sub-datasets. Condition 2 in FD002 and condition 2 in FD004
+refer to different physical flight points because KMeans assigns
+labels in arbitrary order. Always compare conditions by their
+\texttt{op\_setting} values, not by label number.
+\end{keybox}
+
+\subsection{dT\_compressor}
+
+Temperature rise across the HPC:
+
+\begin{equation}
+  \texttt{dT\_compressor} = T_{30} - T_{24}
+  \label{eq:dtcomp}
+\end{equation}
+
+where $T_{30}$ is the total temperature at the HPC outlet (col 8)
+and $T_{24}$ is the total temperature at the LPC outlet / HPC inlet
+(col 7).
+
+\textbf{Physical meaning:} healthy compression raises temperature
+by a predictable amount. As the HPC degrades, compression efficiency
+drops. The controller compensates by demanding more fuel, which raises
+$T_{30}$ further. So \texttt{dT\_compressor} tends to
+\emph{increase} as HPC health deteriorates.
+
+\textbf{Why add this column?} The raw $T_{30}$ value is dominated
+by the operating condition (altitude, throttle). The difference
+$T_{30} - T_{24}$ removes the common-mode variation and isolates
+the HPC contribution.
+
+\subsection{dT\_turbine}
+
+Temperature drop across the turbine section:
+
+\begin{equation}
+  \texttt{dT\_turbine} = T_{50} - T_{30}
+  \label{eq:dtturb}
+\end{equation}
+
+where $T_{50}$ is the total temperature at the LPT outlet (col 9)
+and $T_{30}$ is the HPC outlet / combustor inlet (col 8).
+
+\textbf{Physical meaning:} the turbines extract work from the hot
+combustion gases, dropping their temperature. A healthy turbine
+produces a large drop. As turbine efficiency changes, this delta
+shifts. Note: in FD001/FD002 the turbines are not the degraded
+component, so this column is less discriminative there but remains
+useful as a health indicator for FD003/FD004 where Fan degradation
+can affect the thermodynamic balance.
+
+% -------------------------------------------------------------------
+\section{Output Columns (Train Sheet Only)}
+% -------------------------------------------------------------------
+
+These three columns are the \emph{targets} for machine learning.
+They appear only on the \texttt{train} sheet because the test RUL
+is the unknown quantity to be predicted.
+
+Figure~\ref{fig:derivation} shows the full derivation map for all
+additional columns.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{19_column_derivation.png}
+  \caption{Derivation map for all additional columns.
+  Source columns (gray, top row) feed into three groups
+  of derived columns via different computation paths.}
+  \label{fig:derivation}
+\end{figure}
+
+\subsection{RUL\_raw}
+
+Remaining useful life in cycles, counting down to zero at failure:
+
+\begin{equation}
+  \texttt{RUL\_raw}(i) = t_{\max}(u_i) - t_i
+  \label{eq:rul_raw}
+\end{equation}
+
+where:
+\begin{itemize}[noitemsep]
+  \item $t_i$ is \texttt{time\_cycles} for row $i$
+  \item $u_i$ is \texttt{unit\_number} for row $i$
+  \item $t_{\max}(u_i) = \max\{t_j : u_j = u_i\}$ is the last
+        cycle observed for that engine (the failure cycle in the
+        training set)
+\end{itemize}
+
+\texttt{RUL\_raw} = 0 at the last row of each training engine
+and counts upward toward earlier cycles.
+
+\textbf{Spreadsheet formula (LO Calc):}
+\begin{verbatim}
+{=MAX(IF($A:$A=$A2,$B:$B))-B2}
+Ctrl+Shift+Enter (array formula)
+\end{verbatim}
+
+\subsection{RUL\_capped}
+
+A piece-wise linear target that clamps long-range RUL values:
+
+\begin{equation}
+  \texttt{RUL\_capped}(i) = \min\!\bigl(\texttt{RUL\_raw}(i),\; 125\bigr)
+  \label{eq:rul_capped}
+\end{equation}
+
+Figure~\ref{fig:rulshape} shows the difference between the two shapes.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{11_rul_target_shape.png}
+  \caption{Raw RUL (dashed) vs capped RUL (solid, cap = 125).
+  Early in engine life the signal carries little degradation
+  information; the cap replaces uninformative large values
+  with a flat healthy label.}
+  \label{fig:rulshape}
+\end{figure}
+
+\textbf{Why 125?} This is a convention in the research literature,
+not a physical constant. Values from 100 to 150 appear in different
+papers. The reasoning: sensor signals only start showing degradation
+trend roughly 100--150 cycles before failure. Asking a model to
+predict RUL = 300 from a healthy-looking sensor trace is both
+unreasonable and wastes model capacity.
+
+\textbf{Spreadsheet formula:}
+\begin{verbatim}
+=MIN(AD2, 125)
+\end{verbatim}
+(where AD is the RUL\_raw column)
+
+\subsection{cycle\_pct}
+
+Fractional position in the engine's life, normalised to $[0, 1]$:
+
+\begin{equation}
+  \texttt{cycle\_pct}(i) = \frac{t_i}{t_{\max}(u_i)}
+  \label{eq:cyclepct}
+\end{equation}
+
+\textbf{Physical meaning:}
+\texttt{cycle\_pct} = 0 at the first cycle of an engine and
+\texttt{cycle\_pct} = 1 at failure. Unlike \texttt{time\_cycles},
+it is comparable across engines of different total lifespans.
+Useful for questions like ``at 50\% of engine life, what do
+the sensors look like?''
+
+\textbf{Spreadsheet formula (LO Calc):}
+\begin{verbatim}
+{=B2/MAX(IF($A:$A=$A2,$B:$B))}
+Ctrl+Shift+Enter (array formula)
+\end{verbatim}
+
+% -------------------------------------------------------------------
+\section{RUL Sheet Columns}
+% -------------------------------------------------------------------
+
+The \texttt{RUL} sheet has four columns. The first two
+(\texttt{unit\_number}, \texttt{RUL}) come directly from the
+NASA \texttt{RUL\_FDxxx.txt} file. The last two are derived.
+
+\subsection{last\_cycle}
+
+The cycle number at which the test trajectory was cut:
+
+\begin{equation}
+  \texttt{last\_cycle}(u) = \max\{t_j : u_j = u,\; j \in \text{test}\}
+  \label{eq:lastcycle}
+\end{equation}
+
+where $u$ is the engine's \texttt{unit\_number}.
+
+\textbf{Where it comes from:} this is the maximum \texttt{time\_cycles}
+value for that engine in the \textbf{test} file. It tells you how
+far into the engine's life the test trajectory was observed.
+
+\textbf{Not stated in the paper.} This is a logical consequence of
+the problem definition: the test file contains cycles 1 through
+$t^*$, so $t^* =$ \texttt{last\_cycle}.
+
+\textbf{Spreadsheet formula (LO Calc):}
+\begin{verbatim}
+{=MAX(IF(test.A:A=A2,test.B:B))}
+Ctrl+Shift+Enter (array formula)
+\end{verbatim}
+
+\subsection{total\_life\_est}
+
+Estimated total engine life, combining observed and remaining:
+
+\begin{equation}
+  \texttt{total\_life\_est}(u) =
+  \texttt{last\_cycle}(u) + \texttt{RUL}(u)
+  \label{eq:totallife}
+\end{equation}
+
+\textbf{Physical meaning:} the engine was observed for
+\texttt{last\_cycle} cycles in the test set. It had
+\texttt{RUL} cycles remaining. Therefore its estimated
+total lifespan is their sum.
+
+\textbf{Not stated in the paper.} Derived for interpretability.
+Allows questions like ``what is the distribution of engine lifespans
+across the test set?''
+
+\textbf{Spreadsheet formula:}
+\begin{verbatim}
+=C2+B2
+\end{verbatim}
+(plain formula, no array entry needed)
+
+% -------------------------------------------------------------------
+\section{Equation Reference}
+% -------------------------------------------------------------------
+
+\begin{table}[H]
+\centering
+\caption{All derived column equations with variable sources.}
+\label{tab:equations}
+\small
+\begin{tabular}{@{}lp{5.5cm}p{5.5cm}@{}}
+\toprule
+Column & Equation & Variables from \\
+\midrule
+\texttt{dT\_compressor} &
+  $T_{30} - T_{24}$ &
+  T30 = col 8, T24 = col 7 \\[4pt]
+
+\texttt{dT\_turbine} &
+  $T_{50} - T_{30}$ &
+  T50 = col 9, T30 = col 8 \\[4pt]
+
+\texttt{condition\_id} &
+  $c(i) = \arg\min_k \|x_i - \mu_k\|^2$ &
+  $x_i$ = cols 3,4,5; $\mu_k$ from KMeans fit on train \\[4pt]
+
+\texttt{RUL\_raw} &
+  $t_{\max}(u_i) - t_i$ &
+  $t_i$ = col 2, $t_{\max}$ = max cycle per engine in train \\[4pt]
+
+\texttt{RUL\_capped} &
+  $\min(\texttt{RUL\_raw},\; 125)$ &
+  RUL\_raw (derived above) \\[4pt]
+
+\texttt{cycle\_pct} &
+  $t_i \;/\; t_{\max}(u_i)$ &
+  $t_i$ = col 2, $t_{\max}$ = max cycle per engine in train \\[4pt]
+
+\texttt{last\_cycle} &
+  $\max\{t_j : u_j = u\}$ over test &
+  col 2 of test file, filtered by unit\_number \\[4pt]
+
+\texttt{total\_life\_est} &
+  $\texttt{last\_cycle} + \texttt{RUL}$ &
+  last\_cycle (derived), RUL = NASA file \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{keybox}
+\textbf{Spreadsheet vs Python boundary.}
+Five of the eight derived columns can be computed as spreadsheet
+formulas: \texttt{dT\_compressor}, \texttt{dT\_turbine},
+\texttt{RUL\_raw}, \texttt{RUL\_capped}, \texttt{cycle\_pct},
+\texttt{last\_cycle}, \texttt{total\_life\_est}.
+Only \texttt{condition\_id} requires Python, because KMeans is an
+iterative optimisation algorithm that cannot be expressed as a
+cell formula.
+\end{keybox}
+
+% -------------------------------------------------------------------
+\end{document}

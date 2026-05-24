@@ -1,0 +1,89 @@
+<svg width="680" height="460" viewBox="0 0 680 460" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Condition label ordering differs between FD002 and FD004</title>
+<desc>Table showing how the same six physical flight conditions get different integer labels in FD002 vs FD004 due to random KMeans initialisation. Four of six conditions receive different label numbers.</desc>
+<style>
+  text { font-family: Arial, sans-serif; fill: #2c2c2a; }
+  .th  { font-size: 14px; font-weight: bold; }
+  .ts  { font-size: 12px; fill: #5f5e5a; }
+</style>
+
+<!-- Column headers -->
+<text class="th" x="40"  y="26" text-anchor="start">Physical condition</text>
+<text class="th" x="330" y="26" text-anchor="middle">FD002 label</text>
+<text class="th" x="490" y="26" text-anchor="middle">FD004 label</text>
+<text class="th" x="568" y="26" text-anchor="start">Match?</text>
+<line x1="40" y1="32" x2="640" y2="32" stroke="#888780" stroke-width="0.8"/>
+
+<!-- Row 1: alt=0 sea level -->
+<rect x="40"  y="40" width="270" height="44" rx="4" fill="#f1efe8" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="th" x="52" y="57" text-anchor="start" fill="#2c2c2a">alt=0 ft, Mach=0.00, TRA=100</text>
+<text class="ts" x="52" y="74" text-anchor="start">sea level takeoff</text>
+<rect x="310" y="46" width="40" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="330" y="61" text-anchor="middle" dominant-baseline="central" fill="#085041">4</text>
+<rect x="470" y="46" width="40" height="30" rx="4" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+<text class="th" x="490" y="61" text-anchor="middle" dominant-baseline="central" fill="#412402">5</text>
+<text class="ts" x="568" y="61" text-anchor="start" fill="#993c1d">different</text>
+
+<!-- Row 2: alt=10k -->
+<rect x="40"  y="90" width="270" height="44" rx="4" fill="#f1efe8" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="th" x="52" y="107" text-anchor="start" fill="#2c2c2a">alt=10k ft, Mach=0.25, TRA=100</text>
+<text class="ts" x="52" y="124" text-anchor="start">climb</text>
+<rect x="310" y="96" width="40" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="330" y="111" text-anchor="middle" dominant-baseline="central" fill="#085041">5</text>
+<rect x="470" y="96" width="40" height="30" rx="4" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+<text class="th" x="490" y="111" text-anchor="middle" dominant-baseline="central" fill="#412402">2</text>
+<text class="ts" x="568" y="111" text-anchor="start" fill="#993c1d">different</text>
+
+<!-- Row 3: alt=20k -->
+<rect x="40"  y="140" width="270" height="44" rx="4" fill="#f1efe8" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="th" x="52" y="157" text-anchor="start" fill="#2c2c2a">alt=20k ft, Mach=0.70, TRA=100</text>
+<text class="ts" x="52" y="174" text-anchor="start">cruise (full thrust)</text>
+<rect x="310" y="146" width="40" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="330" y="161" text-anchor="middle" dominant-baseline="central" fill="#085041">2</text>
+<rect x="470" y="146" width="40" height="30" rx="4" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+<text class="th" x="490" y="161" text-anchor="middle" dominant-baseline="central" fill="#412402">4</text>
+<text class="ts" x="568" y="161" text-anchor="start" fill="#993c1d">different</text>
+
+<!-- Row 4: alt=25k -->
+<rect x="40"  y="190" width="270" height="44" rx="4" fill="#f1efe8" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="th" x="52" y="207" text-anchor="start" fill="#2c2c2a">alt=25k ft, Mach=0.62, TRA=60</text>
+<text class="ts" x="52" y="224" text-anchor="start">cruise (reduced thrust)</text>
+<rect x="310" y="196" width="40" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="330" y="211" text-anchor="middle" dominant-baseline="central" fill="#085041">3</text>
+<rect x="470" y="196" width="40" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="490" y="211" text-anchor="middle" dominant-baseline="central" fill="#085041">3</text>
+<text class="ts" x="568" y="211" text-anchor="start" fill="#0f6e56">same</text>
+
+<!-- Row 5: alt=35k -->
+<rect x="40"  y="240" width="270" height="44" rx="4" fill="#f1efe8" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="th" x="52" y="257" text-anchor="start" fill="#2c2c2a">alt=35k ft, Mach=0.84, TRA=100</text>
+<text class="ts" x="52" y="274" text-anchor="start">high altitude cruise</text>
+<rect x="310" y="246" width="40" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="330" y="261" text-anchor="middle" dominant-baseline="central" fill="#085041">6</text>
+<rect x="470" y="246" width="40" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="490" y="261" text-anchor="middle" dominant-baseline="central" fill="#085041">6</text>
+<text class="ts" x="568" y="261" text-anchor="start" fill="#0f6e56">same</text>
+
+<!-- Row 6: alt=42k -->
+<rect x="40"  y="290" width="270" height="44" rx="4" fill="#f1efe8" stroke="#d3d1c7" stroke-width="0.5"/>
+<text class="th" x="52" y="307" text-anchor="start" fill="#2c2c2a">alt=42k ft, Mach=0.84, TRA=100</text>
+<text class="ts" x="52" y="324" text-anchor="start">top of climb</text>
+<rect x="310" y="296" width="40" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="330" y="311" text-anchor="middle" dominant-baseline="central" fill="#085041">1</text>
+<rect x="470" y="296" width="40" height="30" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text class="th" x="490" y="311" text-anchor="middle" dominant-baseline="central" fill="#085041">1</text>
+<text class="ts" x="568" y="311" text-anchor="start" fill="#0f6e56">same</text>
+
+<!-- Divider -->
+<line x1="40" y1="348" x2="640" y2="348" stroke="#888780" stroke-width="0.8"/>
+
+<!-- Why -->
+<text class="th" x="40" y="368" text-anchor="start">Why the ordering differs</text>
+<text class="ts" x="40" y="386" text-anchor="start">KMeans starts with randomly placed centroids. Different datasets produce different initialisation even with random_state=42.</text>
+<text class="ts" x="40" y="402" text-anchor="start">The physical clusters are identical — label integers 1–6 are just names assigned by arrival order during that run.</text>
+
+<!-- Warning -->
+<rect x="40" y="418" width="600" height="34" rx="4" fill="#faece7" stroke="#993c1d" stroke-width="0.5"/>
+<text class="ts" x="340" y="431" text-anchor="middle" fill="#4a1b0c">Do not compare condition_id=2 in FD002 with condition_id=2 in FD004.</text>
+<text class="ts" x="340" y="445" text-anchor="middle" fill="#712b13">They refer to different physical conditions. Always compare by (op_setting_1, op_setting_2, op_setting_3).</text>
+</svg>
