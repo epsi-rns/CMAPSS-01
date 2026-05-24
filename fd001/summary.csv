@@ -1,0 +1,3 @@
+model,input_dim,n_features,epochs,rmse,mae,nasa_score,features
+FD001_PCA,2,2,500,17.7975,12.5539,815.29,"PC1, PC2"
+FD001_NORM,15,15,500,18.2114,13.5197,928.52,"T24, T30, T50, P15, P30, Nf..."

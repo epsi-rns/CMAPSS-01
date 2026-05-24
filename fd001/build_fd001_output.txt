@@ -1,0 +1,63 @@
+C-MAPSS FD001 — ANN + Garson Pipeline
+Architecture: input → 64 → 32 → 1
+Epochs: 500  Batch: 512  LR: 0.001
+
+[FD001_PCA]
+  Training FD001_PCA (dim=2, train=20,631, epochs=500)...
+    epoch 100/500  rmse=17.7636
+    epoch 200/500  rmse=17.7218
+    epoch 300/500  rmse=17.7104
+    epoch 400/500  rmse=17.6964
+    epoch 500/500  rmse=17.6865
+  RMSE=17.7975  MAE=12.5539  NASA=815.29
+  Top 5 features (Garson):
+     1. PC1              51.69%  █████████████████████████
+     2. PC2              48.31%  ████████████████████████
+
+[FD001_NORM]
+  Training FD001_NORM (dim=15, train=20,631, epochs=500)...
+    epoch 100/500  rmse=17.7670
+    epoch 200/500  rmse=17.5486
+    epoch 300/500  rmse=17.4384
+    epoch 400/500  rmse=17.3664
+    epoch 500/500  rmse=17.2995
+  RMSE=18.2114  MAE=13.5197  NASA=928.52
+  Top 5 features (Garson):
+     1. P15              22.27%  ███████████
+     2. NRc               6.70%  ███
+     3. phi               6.64%  ███
+     4. Nc                5.78%  ██
+     5. Ps30              5.71%  ██
+
+============================================================
+  FD001 RESULTS
+============================================================
+  model              dim      RMSE       MAE        NASA
+------------------------------------------------------------
+  FD001_PCA            2   17.7975   12.5539      815.29
+  FD001_NORM          15   18.2114   13.5197      928.52
+============================================================
+
+  Garson comparison (top 8 by mean importance):
+  feature              FD001_PCA    FD001_NORM
+----------------------------------------------
+  PC1                     51.69%             —
+  PC2                     48.31%             —
+  P15                          —        22.27%
+  NRc                          —         6.70%
+  phi                          —         6.64%
+  Nc                           —         5.78%
+  Ps30                         —         5.71%
+  NRf                          —         5.69%
+
+Files written:
+  ./PCA/model.pt
+  ./PCA/predictions.csv
+  ./PCA/history.csv
+  ./NORM/model.pt
+  ./NORM/predictions.csv
+  ./NORM/history.csv
+  ./summary.csv
+  ./garson_PCA.csv
+  ./garson_NORM.csv
+  ./garson_summary.csv

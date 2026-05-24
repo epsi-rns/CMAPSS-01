@@ -1,0 +1,3 @@
+model,feature,importance,importance_pct,rank
+FD001_PCA,PC1,0.51687,51.687,1
+FD001_PCA,PC2,0.48313,48.313,2
